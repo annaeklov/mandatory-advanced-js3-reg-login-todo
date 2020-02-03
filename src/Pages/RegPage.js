@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import Form from "../Components/Form.js";
+import Header from "../Components/Header.js";
 
 export default class RegPage extends React.Component {
   constructor(props) {
@@ -46,12 +47,16 @@ export default class RegPage extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
     console.log(this.state);
   }
+
+  
   render() {
     return (
       <>
         <Helmet>
           <title>Register page</title>
         </Helmet>
+        <Header />
+
         <p>Please register</p>
         <Form
           handleSubmit={this.handleSubmit}

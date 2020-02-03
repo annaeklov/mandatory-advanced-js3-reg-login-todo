@@ -28,7 +28,7 @@ export default function Form(props) {
 
         {props.register && (
           <p>
-            Don't have an acount?
+            Don't have an account?
             <Link to="/register">
               <span>Register here</span>
             </Link>
@@ -77,6 +77,7 @@ const InputButton = styled.input.attrs({ type: "submit" })`
     background-color: palevioletred;
     border: solid 1px papayawhip;
     color: papayawhip;
+    
     font-size: 0.9em;
   }
 `;
