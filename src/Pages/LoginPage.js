@@ -37,6 +37,7 @@ export default class LoginPage extends React.Component {
       .then(response => {
         console.log(response.data);
         updateToken(response.data.token);
+        console.log()
       })
       .catch(error => {
         this.setState({ error: true });

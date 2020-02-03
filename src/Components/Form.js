@@ -26,11 +26,18 @@ export default function Form(props) {
         />
         <InputButton type="submit" value={props.submitButtonText} />
 
-        {props.register && (
+        {props.register ? (
           <p>
             Don't have an account?
             <Link to="/register">
               <span>Register here</span>
+            </Link>
+          </p>
+        ) : (
+          <p>
+            Already have an account?
+            <Link to="/login">
+              <span>Login here</span>
             </Link>
           </p>
         )}
@@ -77,7 +84,7 @@ const InputButton = styled.input.attrs({ type: "submit" })`
     background-color: palevioletred;
     border: solid 1px papayawhip;
     color: papayawhip;
-    
+
     font-size: 0.9em;
   }
 `;

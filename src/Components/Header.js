@@ -17,6 +17,7 @@ export default class Header extends React.Component {
       this.setState({
         decodedEmail: decoded.email
       });
+      console.log(decoded);
     }
   }
 
@@ -26,15 +27,13 @@ export default class Header extends React.Component {
         <Container>
           <Title>HEJ header</Title>
           <Navbar>
-            <Link to="/register">
-              <MyButton>RegisterPage </MyButton>
-            </Link>
-            <Link to="/login">
+          
+          {/*   <Link to="/login">
               <MyButton>LoginPage </MyButton>
             </Link>
             <Link to="/">
               <MyButton>TodoPage</MyButton>
-            </Link>
+            </Link> */}
           </Navbar>
           {this.state.decodedEmail && (
             <Subtitle>
