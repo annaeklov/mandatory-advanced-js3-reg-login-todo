@@ -26,18 +26,9 @@ export default class Header extends React.Component {
       <>
         <Container>
           <Title>HEJ header</Title>
-          <Navbar>
-          
-          {/*   <Link to="/login">
-              <MyButton>LoginPage </MyButton>
-            </Link>
-            <Link to="/">
-              <MyButton>TodoPage</MyButton>
-            </Link> */}
-          </Navbar>
           {this.state.decodedEmail && (
             <Subtitle>
-              Logged in as:<Subtitle email> {this.state.decodedEmail}</Subtitle>
+              Logged in as: <b>{this.state.decodedEmail}</b>
             </Subtitle>
           )}
         </Container>
@@ -50,7 +41,7 @@ export default class Header extends React.Component {
 
 const Container = styled.div`
   width: 100vw;
-  height: 30%;
+  height: 20%;
   background-color: papayawhip;
 `;
 
@@ -64,10 +55,6 @@ const Subtitle = styled.p`
   margin: 0;
 `;
 
-const Navbar = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
 
 const MyButton = styled.button`
   border: solid 1px palevioletred;

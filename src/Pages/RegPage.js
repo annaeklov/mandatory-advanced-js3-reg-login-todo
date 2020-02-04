@@ -32,14 +32,13 @@ export default class RegPage extends React.Component {
       })
       .then(response => {
         if (response.status === 201) {
-          console.log("POSTAD REGISTER");
           this.setState({ redirect: true });
-          //
         }
       })
       .catch(err => {
         this.setState({ errorPost: true });
         console.log(err);
+        //this.setState({ email: "", password: ""});
       });
   }
 
@@ -48,7 +47,6 @@ export default class RegPage extends React.Component {
     console.log(this.state);
   }
 
-  
   render() {
     return (
       <>

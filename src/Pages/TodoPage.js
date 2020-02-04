@@ -5,19 +5,22 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { token$, updateToken } from "../Components/TokenStore.js";
 import Header from "../Components/Header.js";
-
+import TodoList from "../Components/TodoList.js";
 
 export default class TodoPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       todoList: [],
+      content: "",
       token: token$.value
     };
 
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getAxios = this.getAxios.bind(this);
+    this.postAxios = this.postAxios.bind(this);
+    this.deleteAxios = this.deleteAxios.bind(this);
   }
 
   componentDidMount() {
@@ -35,9 +38,26 @@ export default class TodoPage extends React.Component {
         }
       })
       .then(resp => {
-        console.log(resp.data.todos);
         this.setState({ todoList: resp.data.todos });
-        console.log(this.state.todoList);
+      })
+      .catch(err => {
+        console.log("err", err);
+        updateToken(null);
+      });
+  }
+
+  postAxios() {
+    let todo = { content: this.state.content };
+
+    axios
+      .post("http://3.120.96.16:3002/todos", todo, {
+        headers: {
+          Authorization: `Bearer ${this.state.token}`
+        }
+      })
+      .then(resp => {
+        this.getAxios();
+        this.setState({ content: "" });
       })
       .catch(err => {
         console.log("err", err);
@@ -47,15 +67,30 @@ export default class TodoPage extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log("submittad add todo");
+    this.postAxios();
   }
 
   handleOnChange(e) {
-    console.log("changing todo", e.target.value);
+    this.setState({ content: e.target.value });
+  }
+
+  deleteAxios(id) {
+    axios
+      .delete(`http://3.120.96.16:3002/todos/${id}`, {
+        headers: {
+          Authorization: `Bearer ${this.state.token}`
+        }
+      })
+      .then(resp => {
+        this.getAxios();
+      })
+      .catch(err => {
+        console.log("err", err);
+        updateToken(null);
+      });
   }
 
   logout() {
-    console.log("logout");
     updateToken(null);
   }
 
@@ -69,7 +104,7 @@ export default class TodoPage extends React.Component {
         <Helmet>
           <title>Todo page</title>
         </Helmet>
-        <Header token={this.state.token}/>
+        <Header token={this.state.token} />
 
         <p>TodoPage</p>
         <form onSubmit={this.handleSubmit}>
@@ -77,9 +112,16 @@ export default class TodoPage extends React.Component {
             type="text"
             placeholder="Add a new todo"
             onChange={this.handleOnChange}
+            value={this.state.content}
           />
           <InputButton type="submit" value="Add todo" />
         </form>
+
+        <TodoList
+          todoList={this.state.todoList}
+          deleteTodo={this.deleteAxios}
+        />
+
         <InputButton
           logout
           type="submit"
