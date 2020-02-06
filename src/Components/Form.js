@@ -52,7 +52,14 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: solid 5px palevioletred;
+  border: solid 5px;
+
+  border-image: linear-gradient(
+      to bottom,
+      rgba(255, 177, 209, 1),
+      rgba(255, 252, 243, 1)
+    )
+    1 100%;
   border-radius: 5px;
   height: 300px;
   width: 200px;

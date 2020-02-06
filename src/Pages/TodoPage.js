@@ -109,6 +109,7 @@ export default class TodoPage extends React.Component {
         <p>TodoPage</p>
         <form onSubmit={this.handleSubmit}>
           <InputField
+            required
             type="text"
             placeholder="Add a new todo"
             onChange={this.handleOnChange}
