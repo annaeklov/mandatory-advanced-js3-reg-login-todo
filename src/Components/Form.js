@@ -52,45 +52,39 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: solid 5px;
+  background-color: #404040;
 
-  border-image: linear-gradient(
-      to bottom,
-      rgba(255, 177, 209, 1),
-      rgba(255, 252, 243, 1)
-    )
-    1 100%;
-  border-radius: 5px;
+  border-radius: 1px;
   height: 300px;
-  width: 200px;
+  width: 300px;
   padding: 20px;
 `;
 
 const InputField = styled.input`
   border: none;
-  border-bottom: solid 1px palevioletred;
+  border-bottom: solid 1px #e3c994;
+  background: transparent;
   margin: 15px 0px;
   width: 90%;
   height: 20px;
   font-size: 12px;
   outline: none;
+  color: white;
 `;
 
 const InputButton = styled.input.attrs({ type: "submit" })`
-  border: solid 1px palevioletred;
+  border: none;
   border-radius: 5px;
-  background: papayawhip;
-  color: palevioletred;
+  background-color: #2a2a2a;
+  color: #b0935e;
   width: 90%;
   height: 30px;
   outline: none;
   margin: 20px 5px 5px 5px;
-  border-radius: 5px;
 
   :hover {
-    background-color: palevioletred;
-    border: solid 1px papayawhip;
-    color: papayawhip;
+    background-color: #b0935e;
+    color: #2a2a2a;
 
     font-size: 0.9em;
   }

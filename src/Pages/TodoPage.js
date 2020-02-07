@@ -106,30 +106,33 @@ export default class TodoPage extends React.Component {
         </Helmet>
         <Header token={this.state.token} />
 
-        <p>TodoPage</p>
-        <form onSubmit={this.handleSubmit}>
-          <InputField
-            required
-            type="text"
-            placeholder="Add a new todo"
-            onChange={this.handleOnChange}
-            value={this.state.content}
+        <Title>MY TODOS</Title>
+        <Container>
+          <Form onSubmit={this.handleSubmit}>
+            <InputField
+              required
+              maxLength="30"
+              type="text"
+              placeholder="Add a new todo"
+              onChange={this.handleOnChange}
+              value={this.state.content}
+            />
+            <Button type="submit" value="Add" />
+          </Form>
+
+          <TodoList
+            todoList={this.state.todoList}
+            deleteTodo={this.deleteAxios}
           />
-          <InputButton type="submit" value="Add todo" />
-        </form>
 
-        <TodoList
-          todoList={this.state.todoList}
-          deleteTodo={this.deleteAxios}
-        />
-
-        <InputButton
-          logout
-          type="submit"
-          value="Log out"
-          onClick={this.logout}
-        />
-        {!this.state.token && <Redirect to="/login" />}
+          <Button
+            logout
+            type="submit"
+            value="Log out"
+            onClick={this.logout}
+          />
+          {!this.state.token && <Redirect to="/login" />}
+        </Container>
       </>
     );
   }
@@ -137,31 +140,59 @@ export default class TodoPage extends React.Component {
 
 /*--- STYLING --*/
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #404040;
+
+  border-radius: 1px;
+  height: 600px;
+  width: 600px;
+  padding: 20px;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Title = styled.h1`
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 5px;
+  color: #b0935e;
+  margin: 30px 0px 10px 0px;
+`;
+
 const InputField = styled.input`
   border: none;
-  border-bottom: solid 1px palevioletred;
+  border-bottom: solid 1px #e3c994;
+  background: transparent;
+  color: white;
+
   margin: 15px 0px;
-  width: 90%;
+  width: 250px;
   height: 20px;
   font-size: 12px;
   outline: none;
 `;
 
-const InputButton = styled.input.attrs({ type: "submit" })`
-  border: solid 1px palevioletred;
+const Button = styled.input.attrs({ type: "submit" })`
+  border: none;
   border-radius: 5px;
-  background: papayawhip;
-  color: palevioletred;
-  width: ${props => (props.logout ? "80px" : "90%")};
+  background-color: #2a2a2a;
+  color: #b0935e;
+  width: ${props => (props.logout ? "80px" : "130px")};
   height: ${props => (props.logout ? "25px" : "30px")};
   outline: none;
   margin: 5px 0px;
   border-radius: 5px;
+  margin-top: ${props => props.logout && "30px"};
 
   :hover {
-    background-color: palevioletred;
-    border: solid 1px papayawhip;
-    color: papayawhip;
+    background-color: #b0935e;
+    color: #2a2a2a;
     font-size: ${props => (props.logout ? "0.7em" : "0.9em")};
   }
 `;

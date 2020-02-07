@@ -12,7 +12,7 @@ export default class RegPage extends React.Component {
     this.state = {
       email: "",
       password: "",
-      errorPost: false,
+      errorPost: 0,
       redirect: false
     };
 
@@ -36,9 +36,12 @@ export default class RegPage extends React.Component {
         }
       })
       .catch(err => {
-        this.setState({ errorPost: true });
-        console.log(err);
-        //this.setState({ email: "", password: ""});
+        if (err.response.data.message.includes("exists")) {
+          this.setState({ errorPost: 1 });
+          this.setState({ email: "", password: "" });
+        } else this.setState({ errorPost: 2 });
+
+        console.log(err.response.data.message);
       });
   }
 
@@ -55,7 +58,7 @@ export default class RegPage extends React.Component {
         </Helmet>
         <Header />
 
-        <p>Please register</p>
+        <Title>REGISTER HERE</Title>
         <Form
           handleSubmit={this.handleSubmit}
           handleOnChange={this.handleOnChange}
@@ -63,7 +66,10 @@ export default class RegPage extends React.Component {
           emailValue={this.state.email}
           passwordValue={this.state.password}
         />
-        {this.state.errorPost && (
+        {this.state.errorPost === 1 && (
+          <Error>User with that email address exists, try another one</Error>
+        )}
+        {this.state.errorPost === 2 && (
           <Error>Something went wrong, please try again</Error>
         )}
         {this.state.redirect && <Redirect to="/login" />}
@@ -74,6 +80,14 @@ export default class RegPage extends React.Component {
 
 /*--- STYLING ---*/
 
+const Title = styled.h1`
+font-family: 'Montserrat', sans-serif;
+  letter-spacing: 5px;
+  color: #b0935e;
+  margin: 10px 0px 10px 0px;
+`;
+
 const Error = styled.p`
   color: red;
+  font-weight: bold;
 `;

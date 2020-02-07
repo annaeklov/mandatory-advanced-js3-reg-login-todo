@@ -17,12 +17,26 @@ export default function TodoList(props) {
   });
   return (
     <>
-      <Ul>
-        <TransitionGroup>{todoList}</TransitionGroup>
-      </Ul>
+      <UlWrapper>
+        <Ul>
+          <TransitionGroup>{todoList}</TransitionGroup>
+        </Ul>
+      </UlWrapper>
     </>
   );
 }
+
+/*--- STYLING ---*/
+
+
+const UlWrapper = styled.div`
+  width: 400px;
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+`;
 
 const Ul = styled.ul`
   list-style-type: none;
@@ -30,24 +44,24 @@ const Ul = styled.ul`
 `;
 
 const Animation = styled.li`
-  position: relative;
-  width: auto;
-  min-width: 200px;
-  height: 30px;
-  transition: 0.5s ease-out;
-  margin: 5px;
-  padding-top: 5px;
-  padding-left: 5px;
-  border-radius: 10px;
+padding: 5px 10px;
+border-bottom: 1px dashed #e3c994;
+min-width: 200px;
+width: auto;
+color: #969696;
 
-  transform: translateX(
+
+
+/*---About the animation---*/
+  transition: 0.5s ease-out;
+  transform: translateX( 
     ${({ state }) => (state === "entering" || state === "entered" ? 0 : 400)}px
   );
 
-  background: ${({ state }) =>
-    state === "entering" || state === "entered"
-      ? "palevioletred"
-      : "palevioletred"};
+/*   background: ${({ state }) =>
+  state === "entering" || state === "entered"
+    ? "transparent"
+    : "papayawhip"}; */
 
   opacity: ${({ state }) =>
     state === "entering" || state === "entered" ? "1" : "0.1"};
@@ -58,11 +72,16 @@ const DelBtn = styled.button`
   left: 100%;
   top: 10%;
   margin-left: 20px;
-  border: 2px solid palevioletred;
+  border: 1px solid #e3c994;
   border-radius: 20px;
   background: transparent;
+  outline: none;
+  color: #f25c1f;
+
 
   :hover {
-    background: palevioletred;
+    background: #f25c1f;
+      color: #e3c994;
+
   }
 `;

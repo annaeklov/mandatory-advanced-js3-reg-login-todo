@@ -65,7 +65,7 @@ export default class LoginPage extends React.Component {
         </Helmet>
         <Header />
 
-        <p>Please login to see your todos</p>
+        <Title>LOGIN HERE</Title>
         <Form
           handleSubmit={this.handleSubmit}
           handleOnChange={this.handleOnChange}
@@ -80,3 +80,14 @@ export default class LoginPage extends React.Component {
     );
   }
 }
+
+
+/*--- STYLING ---*/
+
+
+const Title = styled.h1`
+font-family: 'Montserrat', sans-serif;
+  letter-spacing: 5px;
+  color: #b0935e;
+  margin: 10px 0px 10px 0px;
+`;
