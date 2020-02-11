@@ -18,6 +18,7 @@ export default function TodoList(props) {
   return (
     <>
       <UlWrapper>
+        {props.todoList.length === 0 && <Empty>The list is empty. Add a new todo or enjoy having nothing to do</Empty>}
         <Ul>
           <TransitionGroup>{todoList}</TransitionGroup>
         </Ul>
@@ -27,7 +28,6 @@ export default function TodoList(props) {
 }
 
 /*--- STYLING ---*/
-
 
 const UlWrapper = styled.div`
   width: 100%;
@@ -44,25 +44,17 @@ const Ul = styled.ul`
 `;
 
 const Animation = styled.li`
-padding: 5px 10px;
-border-bottom: 1px dashed #e3c994;
-min-width: 200px;
-width: auto;
-color: #969696;
+  padding: 5px 10px;
+  border-bottom: 1px dashed #e3c994;
+  min-width: 200px;
+  width: auto;
+  color: #969696;
 
-
-
-/*---About the animation---*/
+  /*---About the animation---*/
   transition: 0.5s ease-out;
-  transform: translateX( 
+  transform: translateX(
     ${({ state }) => (state === "entering" || state === "entered" ? 0 : 400)}px
   );
-
-/*   background: ${({ state }) =>
-  state === "entering" || state === "entered"
-    ? "transparent"
-    : "papayawhip"}; */
-
   opacity: ${({ state }) =>
     state === "entering" || state === "entered" ? "1" : "0.1"};
 `;
@@ -78,10 +70,12 @@ const DelBtn = styled.button`
   outline: none;
   color: #f25c1f;
 
-
   :hover {
     background: #f25c1f;
-      color: #e3c994;
-
+    color: #e3c994;
   }
+`;
+
+const Empty = styled.p`
+  color: #f25c1f;
 `;
