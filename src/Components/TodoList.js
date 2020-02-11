@@ -51,7 +51,7 @@ const Animation = styled.li`
   color: #969696;
 
   /*---About the animation---*/
-  transition: 0.5s ease-out;
+  transition: 0.6s ease-out;
   transform: translateX(
     ${({ state }) => (state === "entering" || state === "entered" ? 0 : 400)}px
   );
