@@ -15,7 +15,7 @@ export default class TodoPage extends React.Component {
       content: "",
       token: token$.value,
       invalidInput: false,
-      error: false
+      error: 0
     };
 
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -43,7 +43,7 @@ export default class TodoPage extends React.Component {
         this.setState({ todoList: resp.data.todos });
       })
       .catch(err => {
-        this.setState({ error: true });
+        this.setState({ error: 1 });
         console.log("err", err);
         updateToken(null);
       });
@@ -63,7 +63,7 @@ export default class TodoPage extends React.Component {
         this.setState({ content: "" });
       })
       .catch(err => {
-        this.setState({ error: true });
+        this.setState({ error: 1 });
         console.log("err", err);
         updateToken(null);
       });
@@ -93,10 +93,11 @@ export default class TodoPage extends React.Component {
       })
       .then(resp => {
         this.getAxios();
+        this.setState({ error: 0 });
       })
       .catch(err => {
+        this.setState({ error: 2 });
         console.log("err", err);
-        updateToken(null);
       });
   }
 
@@ -131,9 +132,7 @@ export default class TodoPage extends React.Component {
             />
 
             {this.state.invalidInput && (
-              <Error>
-                Invalid input, only whitespaces are not allowed
-              </Error>
+              <Error>Invalid input, only whitespaces are not allowed</Error>
             )}
 
             <Button type="submit" value="ADD" />
@@ -143,7 +142,12 @@ export default class TodoPage extends React.Component {
             todoList={this.state.todoList}
             deleteTodo={this.deleteAxios}
           />
-          {this.state.error && <Error>Something went wrong, try again</Error>}
+          {this.state.error === 1 && (
+            <Error>Something went wrong, try again</Error>
+          )}
+          {this.state.error === 2 && (
+            <Error>Oops, the todo is already deleted..</Error>
+          )}
 
           {!this.state.token && <Redirect to="/login" />}
         </Container>
@@ -219,5 +223,3 @@ const Error = styled.p`
   color: #f25c1f;
   font-weight: bold;
 `;
-
-
