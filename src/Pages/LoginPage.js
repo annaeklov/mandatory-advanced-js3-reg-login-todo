@@ -24,7 +24,7 @@ export default class LoginPage extends React.Component {
 
   componentDidMount() {
     this.subscription = token$.subscribe(token => {
-      this.setState({ token }); // får senaste värdet och lyssnar på nya värden, lagrar värden och lyssnar på förändring. Tillhör rxjs.
+      this.setState({ token }); 
     });
   }
 
@@ -37,7 +37,6 @@ export default class LoginPage extends React.Component {
       .then(response => {
         console.log(response.data);
         updateToken(response.data.token);
-        console.log()
       })
       .catch(error => {
         this.setState({ error: true });
@@ -69,13 +68,13 @@ export default class LoginPage extends React.Component {
         <Form
           handleSubmit={this.handleSubmit}
           handleOnChange={this.handleOnChange}
-          submitButtonText="Login"
+          submitButtonText="LOGIN"
           emailValue={this.state.email}
           passwordValue={this.state.password}
           register={true}
         />
         {this.state.token && <Redirect to="/" />}
-        {this.state.error && <p style={{ color: "red" }}>Invalid input!</p>}
+        {this.state.error && <Error>Invalid input, try again</Error>}
       </>
     );
   }
@@ -84,10 +83,14 @@ export default class LoginPage extends React.Component {
 
 /*--- STYLING ---*/
 
-
 const Title = styled.h1`
 font-family: 'Montserrat', sans-serif;
   letter-spacing: 5px;
   color: #b0935e;
-  margin: 10px 0px 10px 0px;
+  margin: 30px 0px 10px 0px;
+`;
+
+const Error = styled.p`
+  color: #f25c1f;
+  font-weight: bold;
 `;

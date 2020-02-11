@@ -14,6 +14,7 @@ export default class App extends React.Component {
             <Route exact path="/" component={TodoPage} />
             <Route path="/register" component={RegPage} />
             <Route path="/login" component={LoginPage} />
+            <Footer></Footer>
           </AppDiv>
         </>
       </Router>
@@ -21,11 +22,18 @@ export default class App extends React.Component {
   }
 }
 
-const AppDiv = styled.div`
+const AppDiv = styled.body`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  background-color: #2a2a2a;
+`;
+
+const Footer = styled.footer`
+  width: 100vw;
+  height: 100px;
+  margin-top: 20px;
   background-color: #2a2a2a;
 `;

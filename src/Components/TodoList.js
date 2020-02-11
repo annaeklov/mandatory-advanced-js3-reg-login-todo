@@ -30,7 +30,7 @@ export default function TodoList(props) {
 
 
 const UlWrapper = styled.div`
-  width: 400px;
+  width: 100%;
   height: 100%;
   overflow: auto;
   overflow-x: hidden;

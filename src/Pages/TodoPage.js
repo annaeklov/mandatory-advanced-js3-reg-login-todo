@@ -13,7 +13,9 @@ export default class TodoPage extends React.Component {
     this.state = {
       todoList: [],
       content: "",
-      token: token$.value
+      token: token$.value,
+      invalidInput: false,
+      error: false
     };
 
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -41,6 +43,7 @@ export default class TodoPage extends React.Component {
         this.setState({ todoList: resp.data.todos });
       })
       .catch(err => {
+        this.setState({ error: true });
         console.log("err", err);
         updateToken(null);
       });
@@ -60,6 +63,7 @@ export default class TodoPage extends React.Component {
         this.setState({ content: "" });
       })
       .catch(err => {
+        this.setState({ error: true });
         console.log("err", err);
         updateToken(null);
       });
@@ -67,7 +71,13 @@ export default class TodoPage extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    if (this.state.content.trim().length === 0) {
+      this.setState({ invalidInput: true });
+      this.setState({ content: "" });
+      return;
+    }
     this.postAxios();
+    this.setState({ invalidInput: false });
   }
 
   handleOnChange(e) {
@@ -107,7 +117,9 @@ export default class TodoPage extends React.Component {
         <Header token={this.state.token} />
 
         <Title>MY TODOS</Title>
+
         <Container>
+          <Button logout type="submit" value="Log out" onClick={this.logout} />
           <Form onSubmit={this.handleSubmit}>
             <InputField
               required
@@ -117,20 +129,22 @@ export default class TodoPage extends React.Component {
               onChange={this.handleOnChange}
               value={this.state.content}
             />
-            <Button type="submit" value="Add" />
+
+            {this.state.invalidInput && (
+              <Error>
+                Invalid input, only whitespaces are not allowed
+              </Error>
+            )}
+
+            <Button type="submit" value="ADD" />
           </Form>
 
           <TodoList
             todoList={this.state.todoList}
             deleteTodo={this.deleteAxios}
           />
+          {this.state.error && <Error>Something went wrong, try again</Error>}
 
-          <Button
-            logout
-            type="submit"
-            value="Log out"
-            onClick={this.logout}
-          />
           {!this.state.token && <Redirect to="/login" />}
         </Container>
       </>
@@ -141,11 +155,13 @@ export default class TodoPage extends React.Component {
 /*--- STYLING --*/
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #404040;
-
+  box-shadow: 10px 10px 31px -5px rgba(0, 0, 0, 0.57);
+  margin-bottom: 20px;
   border-radius: 1px;
   height: 600px;
   width: 600px;
@@ -170,7 +186,6 @@ const InputField = styled.input`
   border-bottom: solid 1px #e3c994;
   background: transparent;
   color: white;
-
   margin: 15px 0px;
   width: 250px;
   height: 20px;
@@ -182,13 +197,16 @@ const Button = styled.input.attrs({ type: "submit" })`
   border: none;
   border-radius: 5px;
   background-color: #2a2a2a;
+  font-size: ${props => (props.logout ? "12px" : "20px")};
   color: #b0935e;
   width: ${props => (props.logout ? "80px" : "130px")};
   height: ${props => (props.logout ? "25px" : "30px")};
   outline: none;
-  margin: 5px 0px;
-  border-radius: 5px;
-  margin-top: ${props => props.logout && "30px"};
+  margin: 20px 0px 5px 0px;
+  margin-top: ${props => props.logout && "10px"};
+  position: ${props => props.logout && "absolute"};
+  right: ${props => props.logout && "8px"};
+  top: ${props => props.logout && "3px"};
 
   :hover {
     background-color: #b0935e;
@@ -196,3 +214,10 @@ const Button = styled.input.attrs({ type: "submit" })`
     font-size: ${props => (props.logout ? "0.7em" : "0.9em")};
   }
 `;
+
+const Error = styled.p`
+  color: #f25c1f;
+  font-weight: bold;
+`;
+
+

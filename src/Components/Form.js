@@ -27,19 +27,19 @@ export default function Form(props) {
         <InputButton type="submit" value={props.submitButtonText} />
 
         {props.register ? (
-          <p>
-            Don't have an account?
+          <RegOrLoginP>
+            Don't have an account? <br />
             <Link to="/register">
               <span>Register here</span>
             </Link>
-          </p>
+          </RegOrLoginP>
         ) : (
-          <p>
-            Already have an account?
+          <RegOrLoginP>
+            Already have an account? <br />
             <Link to="/login">
               <span>Login here</span>
             </Link>
-          </p>
+          </RegOrLoginP>
         )}
       </FormWrapper>
     </form>
@@ -53,7 +53,8 @@ const FormWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #404040;
-
+  box-shadow: 10px 10px 31px -5px rgba(0, 0, 0, 0.57);
+  margin-top: 10px;
   border-radius: 1px;
   height: 300px;
   width: 300px;
@@ -77,6 +78,7 @@ const InputButton = styled.input.attrs({ type: "submit" })`
   border-radius: 5px;
   background-color: #2a2a2a;
   color: #b0935e;
+  font-size: 20px;
   width: 90%;
   height: 30px;
   outline: none;
@@ -85,7 +87,21 @@ const InputButton = styled.input.attrs({ type: "submit" })`
   :hover {
     background-color: #b0935e;
     color: #2a2a2a;
+    font-size: 1.1em;
+  }
+`;
 
+const RegOrLoginP = styled.p`
+  color: #969696;
+  text-align: center;
+  a {
+    text-decoration: none;
+    border-bottom: 1px solid #e3c994;
     font-size: 0.9em;
+    color: #969696;
+  }
+  a:hover {
+    color: #969696;
+    font-size: 1.1em;
   }
 `;
